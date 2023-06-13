@@ -9,7 +9,7 @@ export default {
         secondary: "#0f172a",
       },
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
+        rubik: ["Rubik", "sans-serif"],
       },
       screens: {
         "1bp": { max: "1300px" },
