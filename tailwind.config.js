@@ -7,6 +7,7 @@ export default {
         white: "#ffffff",
         primary: "#020617",
         secondary: "#0f172a",
+        "custom-orange": "#ffa726",
       },
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],

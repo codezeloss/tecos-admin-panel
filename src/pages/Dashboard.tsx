@@ -1,21 +1,28 @@
-import LayoutDashPage from "../components/LayoutDashPage.tsx";
+import PageTitle from "../components/PageTitle.tsx";
 import StatusCard from "../components/Dashboard/StatusCard.tsx";
+import IncomeCharts from "../components/Dashboard/IncomeCharts.tsx";
+import OrdersTable from "../components/Dashboard/OrdersTable.tsx";
+import RecentReviewsTable from "../components/Dashboard/RecentReviewsTable.tsx";
 
 function Dashboard() {
   return (
-    <div className="w-full h-screen p-5">
-      <LayoutDashPage title="Dashboard" />
+    <>
+      <main className="h-screen p-8">
+        <PageTitle title="Dashboard" />
+        <div>
+          <h3 className="text-xl mt-6 mb-4 font-semibold">Status</h3>
+          <div className="flex items-center gap-3 mb-4">
+            <StatusCard />
+            <StatusCard />
+            <StatusCard />
+          </div>
 
-      <div>
-        <div className="flex items-center gap-3">
-          <StatusCard />
-          <StatusCard />
-          <StatusCard />
+          <IncomeCharts />
+          <OrdersTable />
+          <RecentReviewsTable />
         </div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 }
 

@@ -5,7 +5,7 @@ import {
 
 function Headbar() {
   return (
-    <div className="flex items-center justify-between py-3 px-4 border-b-[1px] ">
+    <div className="bg-white flex items-center justify-between py-3 px-4 border-b-[1px] ">
       <div className="flex items-center gap-4">
         <button className="text-xl" type="button">
           <MdKeyboardDoubleArrowLeft />

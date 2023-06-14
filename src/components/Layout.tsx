@@ -5,9 +5,11 @@ import Headbar from "./Headbar.tsx";
 function Layout() {
   return (
     <>
-      <div className="flex">
-        <Sidebar />
-        <div className="w-full bg-gray-100">
+      <div className="flex overflow-hidden">
+        <div className="w-[300px]">
+          <Sidebar />
+        </div>
+        <div className="w-full h-screen bg-gray-100 overflow-scroll">
           <Headbar />
           <Outlet />
         </div>
