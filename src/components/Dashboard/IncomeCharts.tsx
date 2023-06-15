@@ -83,8 +83,8 @@ const config = {
 function IncomeCharts() {
   // @ts-ignore
   return (
-    <div>
-      <h3 className="text-xl mt-10 mb-4 font-semibold">Income Static</h3>
+    <div className="w-full">
+      <h3 className="text-xl mt-10 mb-6 font-semibold">Income Static</h3>
       <div className="w-full">
         <Column {...config} />
       </div>

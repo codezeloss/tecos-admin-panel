@@ -13,10 +13,7 @@ function Sidebar() {
 
   return (
     <div className="bg-primary w-[300px] h-screen max-h-screen min-h-screen text-white pb-10">
-      <h1 className="text-3xl pl-8 py-6 font-bold">
-        <span className="text-custom-orange">@</span>T
-        <span className="text-custom-orange">eco</span>s.
-      </h1>
+      <h1 className="text-3xl pl-8 py-6 font-bold">@Tecos.</h1>
 
       <div className="flex flex-col gap-2">
         <div>
@@ -40,21 +37,29 @@ function Sidebar() {
           </div>
           {showCatalogOptions && (
             <div className="text-sm px-14 flex flex-col gap-3 my-2">
-              <p>Add product</p>
+              <Link to="/admin/category/add-product">
+                <p>Add Product</p>
+              </Link>
               <Link to="/admin/category/product-list">
-                <p>Product list</p>
+                <p>Product List</p>
               </Link>
-              <p>Brand</p>
+              <Link to="/admin/category/add-brand">
+                <p>Brand</p>
+              </Link>
               <Link to="/admin/category/brand-list">
-                <p>Brand list</p>
+                <p>Brand List</p>
               </Link>
-              <p>Category</p>
+              <Link to="/admin/category/add-category">
+                <p>Category</p>
+              </Link>
               <Link to="/admin/category/category-list">
-                <p>Category list</p>
+                <p>Category List</p>
               </Link>
-              <p>Color</p>
+              <Link to="/admin/category/add-color">
+                <p>Color</p>
+              </Link>
               <Link to="/admin/category/color-list">
-                <p>Color list</p>
+                <p>Color List</p>
               </Link>
             </div>
           )}
@@ -73,14 +78,16 @@ function Sidebar() {
           {showBlogsOptions && (
             <div className="text-sm px-14 flex flex-col gap-3 my-2">
               <Link to="/admin/blogs/add-blog">
-                <p>Add blog</p>
+                <p>Add Blog</p>
               </Link>
               <Link to="/admin/blogs/list">
-                <p>Blog list</p>
+                <p>Blog List</p>
               </Link>
-              <p>Add blog category</p>
+              <Link to="/admin/blogs/add-blog-category">
+                <p>Add Blog Category</p>
+              </Link>
               <Link to="/admin/blogs/category-list">
-                <p>Blog category list</p>
+                <p>Blog Category List</p>
               </Link>
             </div>
           )}
@@ -95,8 +102,8 @@ function Sidebar() {
           </div>
           {false && (
             <div className="text-sm px-14 flex flex-col gap-3 my-2">
-              <p>coupon</p>
-              <p>list</p>
+              <p>Coupon</p>
+              <p>List</p>
             </div>
           )}
         </div>

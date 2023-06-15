@@ -2,7 +2,12 @@ import PageTitle from "../components/PageTitle.tsx";
 import StatusCard from "../components/Dashboard/StatusCard.tsx";
 import IncomeCharts from "../components/Dashboard/IncomeCharts.tsx";
 import OrdersTable from "../components/Dashboard/OrdersTable.tsx";
-import RecentReviewsTable from "../components/Dashboard/RecentReviewsTable.tsx";
+
+{
+  /*
+  import RecentReviewsTable from "../components/Dashboard/RecentReviewsTable.tsx";
+  */
+}
 
 function Dashboard() {
   return (
@@ -17,9 +22,11 @@ function Dashboard() {
             <StatusCard />
           </div>
 
-          <IncomeCharts />
-          <OrdersTable />
-          <RecentReviewsTable />
+          <div className="w-full grid grid-cols-2 gap-6">
+            <OrdersTable />
+            <IncomeCharts />
+          </div>
+          {/*<RecentReviewsTable />*/}
         </div>
       </main>
     </>

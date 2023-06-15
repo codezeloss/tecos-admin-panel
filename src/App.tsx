@@ -14,6 +14,11 @@ import BrandList from "./pages/Catalog/BrandList.tsx";
 import CategoryList from "./pages/Catalog/CategoryList.tsx";
 import ColorList from "./pages/Catalog/ColorList.tsx";
 import AddBlog from "./pages/Blogs/AddBlog.tsx";
+import AddBlogCategory from "./pages/Blogs/AddBlogCategory.tsx";
+import AddColor from "./pages/Catalog/AddColor.tsx";
+import AddCategory from "./pages/Catalog/AddCategory.tsx";
+import AddBrand from "./pages/Catalog/AddBrand.tsx";
+import AddProduct from "./pages/Catalog/AddProduct.tsx";
 
 function App() {
   return (
@@ -31,6 +36,10 @@ function App() {
             element={<BlogCategoryList />}
           />
           <Route path="/admin/blogs/add-blog" element={<AddBlog />} />
+          <Route
+            path="/admin/blogs/add-blog-category"
+            element={<AddBlogCategory />}
+          />
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/customers" element={<Customers />} />
           <Route
@@ -43,6 +52,13 @@ function App() {
             element={<CategoryList />}
           />
           <Route path="/admin/category/color-list" element={<ColorList />} />
+          <Route path="/admin/category/add-color" element={<AddColor />} />
+          <Route
+            path="/admin/category/add-category"
+            element={<AddCategory />}
+          />
+          <Route path="/admin/category/add-brand" element={<AddBrand />} />
+          <Route path="/admin/category/add-product" element={<AddProduct />} />
         </Route>
       </Routes>
     </Router>

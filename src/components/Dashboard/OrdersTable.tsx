@@ -47,12 +47,48 @@ const data: DataType[] = [
     product: 32,
     status: "Sydney No. 1 Lake Park",
   },
+  {
+    key: "4",
+    name: "John Brown",
+    product: 32,
+    status: "New York No. 1 Lake Park",
+  },
+  {
+    key: "5",
+    name: "Jim Green",
+    product: 42,
+    status: "London No. 1 Lake Park",
+  },
+  {
+    key: "6",
+    name: "Joe Black",
+    product: 32,
+    status: "Sydney No. 1 Lake Park",
+  },
+  {
+    key: "7",
+    name: "John Brown",
+    product: 32,
+    status: "New York No. 1 Lake Park",
+  },
+  {
+    key: "8",
+    name: "Jim Green",
+    product: 42,
+    status: "London No. 1 Lake Park",
+  },
+  {
+    key: "9",
+    name: "Joe Black",
+    product: 32,
+    status: "Sydney No. 1 Lake Park",
+  },
 ];
 
 function OrdersTable() {
   return (
-    <div>
-      <h3 className="text-xl mt-10 mb-4 font-semibold">Recent Orders</h3>
+    <div className="w-full">
+      <h3 className="text-xl mt-10 mb-6 font-semibold">Recent Orders</h3>
       <Table columns={columns} dataSource={data} size="middle" />
     </div>
   );
