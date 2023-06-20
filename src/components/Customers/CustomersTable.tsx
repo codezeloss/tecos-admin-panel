@@ -1,12 +1,11 @@
 import { Table } from "antd";
-import React from "react";
 import { ColumnsType } from "antd/es/table";
 
 interface DataType {
-  key: React.Key;
+  key: number;
   name: string;
-  product: number;
-  status: string;
+  email: string;
+  mobile: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -17,75 +16,31 @@ const columns: ColumnsType<DataType> = [
   {
     title: "Name",
     dataIndex: "name",
+    defaultSortOrder: "descend",
+    sorter: (a: any, b: any) => a.name.length - b.name.length,
   },
   {
-    title: "Product",
-    dataIndex: "product",
+    title: "Email",
+    dataIndex: "email",
   },
   {
-    title: "Status",
-    dataIndex: "status",
+    title: "Mobile",
+    dataIndex: "mobile",
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "5",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "9",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-];
+function CustomersTable({ customersData }: any) {
+  const data: DataType[] = [];
 
-function CustomersTable() {
+  for (let i = 0; i < customersData.length; i++) {
+    data.push({
+      key: i + 1,
+      name: customersData[i].firstname + " " + customersData[i].lastname,
+      email: customersData[i].email,
+      mobile: customersData[i].mobile,
+    });
+  }
+
   return (
     <div>
       <Table columns={columns} dataSource={data} size="middle" />

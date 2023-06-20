@@ -3,9 +3,20 @@ interface Props {
   type: string;
   placeholder?: string;
   name: string;
+  value: string;
+  onChange: any;
+  onBlur: any;
 }
 
-function CustomInput({ label, type, placeholder, name }: Props) {
+function CustomInput({
+  label,
+  type,
+  placeholder,
+  name,
+  value,
+  onChange,
+  onBlur,
+}: Props) {
   return (
     <div>
       <label className="text-sm text-black font-semibold">{label}</label>
@@ -14,6 +25,9 @@ function CustomInput({ label, type, placeholder, name }: Props) {
         type={type}
         name={name}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
       />
     </div>
   );
