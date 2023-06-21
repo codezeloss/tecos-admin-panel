@@ -1,17 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "./authService.ts";
 
-export interface UserState {
-  _id: string | null;
-  firstname: string | null;
-  lastname: string | null;
-  email: string | null;
-  mobile: string | null;
-  token: string | null;
+{
+  /*
+  export interface UserState {
+    id: string | null;
+    firstname: string | null;
+    lastname: string | null;
+    email: string | null;
+    mobile: string | null;
+    token: string | null;
+  }
+  */
 }
 
 // Get user from LocalStorage
-const getUserFromLocalStorage: UserState[] = localStorage.getItem("user")
+// @ts-ignore
+const getUserFromLocalStorage = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
 
@@ -55,6 +60,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.isSuccess = false;
+      // @ts-ignore
       state.user = action.payload;
     });
   },

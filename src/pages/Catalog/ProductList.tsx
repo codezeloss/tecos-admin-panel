@@ -1,14 +1,28 @@
 import PageTitle from "../../components/PageTitle.tsx";
 import ProductTable from "../../components/Catalog/ProductTable.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getProducts } from "../../features/product/productSlice.ts";
 
 function ProductList() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      // @ts-ignore
+      dispatch(getProducts());
+    };
+  }, []);
+
+  const productsState = useSelector((state: any) => state.product.products);
+
   return (
     <>
       <main className="h-screen p-8">
         <PageTitle title="Product list" />
 
         <div>
-          <ProductTable />
+          <ProductTable productsData={productsState} />
         </div>
       </main>
     </>
