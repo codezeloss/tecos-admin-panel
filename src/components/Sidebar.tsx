@@ -12,7 +12,7 @@ function Sidebar() {
   const [showBlogsOptions, setShowBlogsOptions] = useState(false);
 
   return (
-    <div className="bg-primary w-[300px] h-screen max-h-screen min-h-screen text-white pb-10">
+    <div className="bg-primary w-[300px] h-screen max-h-screen min-h-screen text-white pb-10 overflow-scroll overflow-x-hidden">
       <h1 className="text-3xl pl-8 py-6 font-bold">@Tecos.</h1>
 
       <div className="flex flex-col gap-2">
