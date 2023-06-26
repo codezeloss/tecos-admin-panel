@@ -1,12 +1,17 @@
 import { Table } from "antd";
-import React from "react";
 import { ColumnsType } from "antd/es/table";
+import { Link } from "react-router-dom";
+import { LuEdit } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
+import React from "react";
 
 interface DataType {
-  key: React.Key;
+  key: number;
   name: string;
-  product: number;
-  status: string;
+  product: any;
+  amount: number;
+  date: string;
+  action: any;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -19,73 +24,54 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "name",
   },
   {
-    title: "Product",
+    title: "Title",
     dataIndex: "product",
   },
   {
-    title: "Status",
-    dataIndex: "status",
+    title: "Amount",
+    dataIndex: "amount",
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+  },
+  {
+    title: "Action",
+    dataIndex: "action",
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "5",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "9",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-];
+function OrdersTable({ ordersData }: any) {
+  const data: DataType[] = [];
 
-function OrdersTable() {
+  for (let i = 0; i < ordersData.length; i++) {
+    data.push({
+      key: i + 1,
+      name: ordersData[i].orderBy.firstname,
+      product: ordersData[i].products.map(
+        (i: any, j: React.Key | null | undefined) => {
+          return (
+            <ul key={j}>
+              <li>{i.product.title}</li>
+            </ul>
+          );
+        }
+      ),
+      amount: ordersData[i].paymentIntent.amount,
+      date: new Date(ordersData[i].createdAt).toLocaleString(),
+      action: (
+        <div className="flex items-center gap-1">
+          <Link to="">
+            <LuEdit />
+          </Link>
+          <Link className="text-lg text-red-600" to="">
+            <MdDeleteOutline />
+          </Link>
+        </div>
+      ),
+    });
+  }
+
   return (
     <div>
       <Table columns={columns} dataSource={data} size="middle" />

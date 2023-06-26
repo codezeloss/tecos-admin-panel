@@ -26,13 +26,13 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-function ColorTable({ productColorsData }: any) {
+function ColorTable({ colorsData }: any) {
   const data: DataType[] = [];
 
-  for (let i = 0; i < productColorsData.length; i++) {
+  for (let i = 0; i < colorsData.length; i++) {
     data.push({
       key: i + 1,
-      name: productColorsData[i].title,
+      name: colorsData[i].title,
       action: (
         <div className="flex items-center gap-1">
           <Link to="">

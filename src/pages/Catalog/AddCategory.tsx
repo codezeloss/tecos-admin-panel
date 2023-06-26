@@ -14,7 +14,7 @@ function AddCategory() {
                 type={"text"}
                 name={"add-category"}
                 placeholder={"Add Category"}
-              />
+                onBlur={""} onChange={""} value={""} />
             </div>
 
             <button

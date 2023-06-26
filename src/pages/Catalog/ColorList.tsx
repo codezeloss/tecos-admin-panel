@@ -2,7 +2,7 @@ import PageTitle from "../../components/PageTitle.tsx";
 import ColorTable from "../../components/Catalog/ColorTable.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getProductColors } from "../../features/productColor/productColorSlice.ts";
+import { getColors } from "../../features/color/colorSlice.ts";
 
 function ColorList() {
   const dispatch = useDispatch();
@@ -10,13 +10,11 @@ function ColorList() {
   useEffect(() => {
     return () => {
       // @ts-ignore
-      dispatch(getProductColors());
+      dispatch(getColors());
     };
   }, []);
 
-  const productColorsState = useSelector(
-    (state: any) => state.productColor.productColors
-  );
+  const colorsState = useSelector((state: any) => state.color.colors);
 
   return (
     <>
@@ -24,7 +22,7 @@ function ColorList() {
         <PageTitle title="Color list" />
 
         <div>
-          <ColorTable productColorsData={productColorsState} />
+          <ColorTable colorsData={colorsState} />
         </div>
       </main>
     </>

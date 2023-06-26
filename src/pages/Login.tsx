@@ -6,19 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice.ts";
 import { useEffect } from "react";
 
+let userSchema = object({
+  email: string().email("Email should be valid!").required("Email is required"),
+  password: string().required("Password is required"),
+});
+
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state: any) => state.auth
   );
-
-  let userSchema = object({
-    email: string()
-      .email("Email should be valid!")
-      .required("Email is required"),
-    password: string().required("Password is required"),
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -67,7 +65,7 @@ function Login() {
           />
 
           {formik.touched.email && formik.errors.email ? (
-            <div className="text-xs font-bold text-red-400 mt-1">
+            <div className="error">
               <p>{formik.errors.email}</p>
             </div>
           ) : null}
@@ -83,7 +81,7 @@ function Login() {
             onBlur={formik.handleChange("password")}
           />
           {formik.touched.password && formik.errors.password ? (
-            <div className="text-xs font-bold text-red-400 mt-1">
+            <div className="error">
               <p>{formik.errors.password}</p>
             </div>
           ) : null}

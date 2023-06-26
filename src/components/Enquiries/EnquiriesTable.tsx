@@ -1,12 +1,18 @@
 import { Table } from "antd";
-import React from "react";
 import { ColumnsType } from "antd/es/table";
+import { Link } from "react-router-dom";
+import { LuEdit } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface DataType {
-  key: React.Key;
+  key: number;
   name: string;
-  product: number;
-  status: string;
+  email: string;
+  comment: string;
+  mobile: string;
+  status: any;
+  date: string;
+  action: any;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -17,75 +23,70 @@ const columns: ColumnsType<DataType> = [
   {
     title: "Name",
     dataIndex: "name",
+    sorter: (a: any, b: any) => a.name.length - b.name.length,
   },
   {
-    title: "Product",
-    dataIndex: "product",
+    title: "Email",
+    dataIndex: "email",
+  },
+  {
+    title: "Comment",
+    dataIndex: "comment",
+  },
+  {
+    title: "Mobile",
+    dataIndex: "mobile",
   },
   {
     title: "Status",
     dataIndex: "status",
   },
-];
-
-const data: DataType[] = [
   {
-    key: "1",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
+    title: "Date",
+    dataIndex: "date",
   },
   {
-    key: "2",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "5",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "9",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
+    title: "Action",
+    dataIndex: "action",
   },
 ];
 
-function EnquiriesTable() {
+function EnquiriesTable({ enquiriesData }: any) {
+  const data: DataType[] = [];
+
+  for (let i = 0; i < enquiriesData.length; i++) {
+    data.push({
+      key: i + 1,
+      name: enquiriesData[i].name,
+      email: enquiriesData[i].email,
+      comment: enquiriesData[i].comment,
+      mobile: enquiriesData[i].mobile,
+      status: (
+        <select
+          className="py-2 px-4 bg-gray-100 text-gray-800 w-full text-sm outline-none font-medium mt-1"
+          name=""
+          id=""
+          placeholder="category 01"
+        >
+          <option value="">Submitted</option>
+          <option value="">Submitted</option>
+          <option value="">Submitted</option>
+        </select>
+      ),
+      date: new Date(enquiriesData[i].createdAt).toLocaleString(),
+      action: (
+        <div className="flex items-center gap-1">
+          <Link to="">
+            <LuEdit />
+          </Link>
+          <Link className="text-lg text-red-600" to="">
+            <MdDeleteOutline />
+          </Link>
+        </div>
+      ),
+    });
+  }
+
   return (
     <div>
       <Table columns={columns} dataSource={data} size="middle" />
