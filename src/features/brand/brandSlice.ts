@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import brandService from "./brandService.ts";
-import { createProduct } from "../product/productSlice.ts";
 
 export interface BrandsState {}
 
@@ -68,12 +67,14 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
+        // @ts-ignore
         state.createdBrand = action.payload;
       })
       .addCase(createBrand.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
+        // @ts-ignore
         state.message = action.error;
       });
   },

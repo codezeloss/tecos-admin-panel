@@ -25,27 +25,60 @@ export const getProductCategories = createAsyncThunk(
 );
 // **
 
+// ** @@ POST PRODUCT CATEGORY
+export const createProductCategory = createAsyncThunk(
+  "product/create-product-category",
+  async (productCategoryData, thunkAPI: any) => {
+    try {
+      return await productCategoryService.createProductCategory(
+        productCategoryData
+      );
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+// **
+
 export const productCategorySlice = createSlice({
   name: "productCategory",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getProductCategories.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getProductCategories.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isError = false;
-      state.isSuccess = true;
-      state.productCategories = action.payload;
-    });
-    builder.addCase(getProductCategories.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      state.isSuccess = false;
-      // @ts-ignore
-      state.productCategories = action.payload;
-    });
+    builder
+      .addCase(getProductCategories.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProductCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.productCategories = action.payload;
+      })
+      .addCase(getProductCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        // @ts-ignore
+        state.productCategories = action.payload;
+      })
+      .addCase(createProductCategory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createProductCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        // @ts-ignore
+        state.createdProductCategory = action.payload;
+      })
+      .addCase(createProductCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        // @ts-ignore
+        state.message = action.error;
+      });
   },
 });
 

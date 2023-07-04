@@ -63,12 +63,17 @@ function AddProduct() {
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
 
+  //
   useEffect(() => {
+    // @ts-ignore
     dispatch(getBrands());
+    // @ts-ignore
     dispatch(getProductCategories());
+    // @ts-ignore
     dispatch(getColors());
   }, []);
 
+  //
   const brandState = useSelector((state: any) => state.brand.brands);
   const productCategoryState = useSelector(
     (state: any) => state.productCategory.productCategories
@@ -87,6 +92,7 @@ function AddProduct() {
     }
   }, [isSuccess, isError, isLoading]);
 
+  //
   let colorOptions: any[] = [];
   colorState.forEach((i: any) => {
     colorOptions.push({
@@ -95,6 +101,7 @@ function AddProduct() {
     });
   });
 
+  //
   let img: any[] = [];
   imageState.forEach((i: any) => {
     img.push({
@@ -104,10 +111,13 @@ function AddProduct() {
   });
 
   useEffect(() => {
+    // @ts-ignore
     formik.values.color = color ? color : "";
-    formik.values.images = images;
+    // @ts-ignore
+    formik.values.images = img;
   }, [color, images]);
 
+  //
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -122,9 +132,10 @@ function AddProduct() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
+      // @ts-ignore
       dispatch(createProduct(values));
       formik.resetForm();
-      setColor(null);
+      setColor([]);
       setTimeout(() => {
         navigate("/admin/category/product-list");
       }, 3000);
@@ -321,7 +332,10 @@ function AddProduct() {
               </p>
               <div className="bg-white p-8 text-center mb-6 rounded-md border-[1px] border-gray-200 cursor-pointer">
                 <Dropzone
-                  onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
+                  onDrop={(acceptedFiles) => {
+                    // @ts-ignore
+                    dispatch(uploadImg(acceptedFiles));
+                  }}
                 >
                   {({ getRootProps, getInputProps }) => (
                     <section>
@@ -338,6 +352,7 @@ function AddProduct() {
               </div>
               <div className="my-6 relative z-10">
                 {imageState?.map((i: any, j: React.Key | null | undefined) => {
+                  // @ts-ignore
                   return (
                     <div key={j}>
                       <img
@@ -350,7 +365,10 @@ function AddProduct() {
                       <button
                         className="bg-white py-1 px-2 rounded-full text-xs font-bold text-gray-800 absolute left-1 top-1 z-20"
                         type="button"
-                        onClick={() => dispatch(deleteImg(i.public_id))}
+                        onClick={() => {
+                          // @ts-ignore
+                          dispatch(deleteImg(i.public_id));
+                        }}
                       >
                         X
                       </button>
