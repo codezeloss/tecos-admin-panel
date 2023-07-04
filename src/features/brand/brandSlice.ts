@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import brandService from "./brandService.ts";
+import { createProduct } from "../product/productSlice.ts";
 
 export interface BrandsState {}
 
@@ -25,27 +26,56 @@ export const getBrands = createAsyncThunk(
 );
 // **
 
+// ** @@ POST BRAND
+export const createBrand = createAsyncThunk(
+  "brand/create-brand",
+  async (brandData, thunkAPI: any) => {
+    try {
+      return await brandService.createBrand(brandData);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+// **
+
 export const brandSlice = createSlice({
   name: "brand",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getBrands.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getBrands.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isError = false;
-      state.isSuccess = true;
-      state.brands = action.payload;
-    });
-    builder.addCase(getBrands.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      state.isSuccess = false;
-      // @ts-ignore
-      state.brands = action.payload;
-    });
+    builder
+      .addCase(getBrands.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBrands.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.brands = action.payload;
+      })
+      .addCase(getBrands.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        // @ts-ignore
+        state.brands = action.payload;
+      })
+      .addCase(createBrand.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createBrand.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.createdBrand = action.payload;
+      })
+      .addCase(createBrand.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      });
   },
 });
 

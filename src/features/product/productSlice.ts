@@ -6,7 +6,6 @@ export interface ProductsState {}
 // initial states
 const initialState = {
   products: [],
-  createdProduct: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -25,12 +24,12 @@ export const getProducts = createAsyncThunk(
   }
 );
 
-// **// ** @@ POST PRODUCT
-export const createProducts = createAsyncThunk(
+// ** @@ CREATE PRODUCT
+export const createProduct = createAsyncThunk(
   "product/create-products",
   async (productData, thunkAPI: any) => {
     try {
-      return await productService.createProducts(productData);
+      return await productService.createProduct(productData);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -60,16 +59,16 @@ export const productSlice = createSlice({
         // @ts-ignore
         state.products = action.payload;
       })
-      .addCase(createProducts.pending, (state) => {
+      .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createProducts.fulfilled, (state, action) => {
+      .addCase(createProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.createdProduct = action.payload;
       })
-      .addCase(createProducts.rejected, (state, action) => {
+      .addCase(createProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

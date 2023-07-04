@@ -7,13 +7,13 @@ const getProducts = async () => {
   return response.data;
 };
 
-const createProducts = async (product: any) => {
+const createProduct = async (product: any) => {
   const response = await axios.post(`${base_url}product/`, product, config);
   return response.data;
 };
 
 const productService = {
   getProducts,
-  createProducts,
+  createProduct,
 };
 export default productService;

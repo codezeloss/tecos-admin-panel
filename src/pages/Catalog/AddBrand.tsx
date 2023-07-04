@@ -1,7 +1,10 @@
 import PageTitle from "../../components/PageTitle.tsx";
 import CustomInput from "../../components/CustomInput.tsx";
+import { useDispatch } from "react-redux";
 
 function AddBrand() {
+  const dispatch = useDispatch();
+
   return (
     <>
       <main className="bg-white h-screen p-8">
@@ -14,6 +17,9 @@ function AddBrand() {
                 type={"text"}
                 name={"add-brand"}
                 placeholder={"Add Brand"}
+                onBlur={() => {}}
+                onChange={() => {}}
+                value={""}
               />
             </div>
 
