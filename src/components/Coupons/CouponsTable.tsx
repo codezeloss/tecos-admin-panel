@@ -6,11 +6,16 @@ import { MdDeleteOutline } from "react-icons/md";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomModal from "../CustomModal.tsx";
-import { deleteColor, getColors } from "../../features/color/colorSlice.ts";
+import {
+  deleteCoupon,
+  getAllCoupons,
+} from "../../features/coupons/couponSlice.ts";
 
 interface DataType {
   key: number;
   name: string;
+  expiry: string;
+  discount: number;
   action: any;
 }
 
@@ -25,48 +30,62 @@ const columns: ColumnsType<DataType> = [
     sorter: (a: any, b: any) => a.name.length - b.name.length,
   },
   {
+    title: "Expiration date",
+    dataIndex: "expiry",
+    sorter: (a: any, b: any) => a.expiry.length - b.expiry.length,
+  },
+  {
+    title: "Discount %",
+    dataIndex: "discount",
+    sorter: (a: any, b: any) => a.discount.length - b.discount.length,
+  },
+  {
     title: "Action",
     dataIndex: "action",
   },
 ];
 
-function ColorTable({ colorsData }: any) {
+function CouponTable({ couponsData }: any) {
   const data: DataType[] = [];
   const [open, setOpen] = useState(false);
-  const [colorId, setColorId] = useState("");
+  const [couponId, setCouponId] = useState("");
   const dispatch = useDispatch();
 
   // Modal
   const showModal = (id: string) => {
     setOpen(true);
-    setColorId(id);
+    setCouponId(id);
   };
   const hideModal = () => {
     setOpen(false);
   };
 
-  // Delete Color
-  const delColor = (id: string) => {
+  // Delete Coupon
+  const deCoupon = (id: string) => {
     // @ts-ignore
-    dispatch(deleteColor(id));
+    dispatch(deleteCoupon(id));
     setOpen(false);
-    // @ts-ignore
-    dispatch(getColors());
+    setTimeout(() => {
+      // @ts-ignore
+      dispatch(getAllCoupons());
+    }, 100);
   };
 
-  for (let i = 0; i < colorsData.length; i++) {
+  for (let i = 0; i < couponsData.length; i++) {
     data.push({
       key: i + 1,
-      name: colorsData[i].title,
+      name: couponsData[i].name,
+      expiry: new Date(couponsData[i].expiry).toLocaleString(),
+      discount: couponsData[i].discount,
       action: (
         <div className="flex items-center gap-1">
-          <Link to={`/admin/catalog/add-color/${colorsData[i]._id}`}>
+          <Link to={`/admin/coupons/add-coupon/${couponsData[i]._id}`}>
             <LuEdit />
           </Link>
           <button
             type={"button"}
             className="text-lg text-red-600"
-            onClick={() => showModal(colorsData[i]._id)}
+            onClick={() => showModal(couponsData[i]._id)}
           >
             <MdDeleteOutline />
           </button>
@@ -81,11 +100,11 @@ function ColorTable({ colorsData }: any) {
       <CustomModal
         open={open}
         hideModal={hideModal}
-        performAction={() => delColor(colorId)}
-        title={"Are you sure you want to delete this color?"}
+        performAction={() => deCoupon(couponId)}
+        title={"Are you sure you want to delete this coupon?"}
       />
     </div>
   );
 }
 
-export default ColorTable;
+export default CouponTable;

@@ -1,12 +1,17 @@
 import PageTitle from "../../components/PageTitle.tsx";
 import CustomInput from "../../components/CustomInput.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { object, string } from "yup";
-import { createColor } from "../../features/color/colorSlice.ts";
+import {
+  createColor,
+  getColor,
+  updateColor,
+} from "../../features/color/colorSlice.ts";
+import { resetState } from "../../utils/reset_redux_states.ts";
 
 let schema = object({
   title: string().required("Color name is required"),
@@ -15,40 +20,74 @@ let schema = object({
 function AddColor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // -------
+  // RTK
   const newColor = useSelector((state: any) => state.color);
-  const { isSuccess, isError, isLoading, createdColor } = newColor;
+  const {
+    isSuccess,
+    isError,
+    isLoading,
+    createdColor,
+    colorName,
+    updatedColor,
+  } = newColor;
 
+  // Product color id
+  const colorId = location.pathname.split("/")[4];
+  //
+  useEffect(() => {
+    if (colorId !== undefined) {
+      // @ts-ignore
+      dispatch(getColor(colorId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [colorId]);
+
+  // Toast
   useEffect(() => {
     if (isSuccess && createdColor) {
       toast.success("🦄 Color added successfully!", {});
+    }
+    if (isSuccess && updatedColor) {
+      toast.success("🦄 Color updated successfully!", {});
+      navigate("/admin/catalog/color-list");
     }
     if (isError) {
       toast.error("🦄 Something went wrong!!", {});
     }
   }, [isSuccess, isError, isLoading, createdColor]);
 
-  // --------
+  // Formik
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: "",
+      title: colorName || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      // @ts-ignore
-      dispatch(createColor(values));
-      formik.resetForm();
-      setTimeout(() => {
-        navigate("/admin/category/color-list");
-      }, 3000);
+      if (colorId !== undefined) {
+        const data = { id: colorId, colorData: values };
+        // @ts-ignore
+        dispatch(updateColor(data));
+        dispatch(resetState());
+      } else {
+        // @ts-ignore
+        dispatch(createColor(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState());
+          navigate("/admin/catalog/color-list");
+        }, 100);
+      }
     },
   });
 
   return (
     <>
       <main className="bg-white h-screen p-8">
-        <PageTitle title="Add Color" />
+        <PageTitle title={`${colorId !== undefined ? "Edit" : "Add"} Color`} />
 
         <div>
           <form onSubmit={formik.handleSubmit}>
@@ -72,7 +111,7 @@ function AddColor() {
               className="bg-secondary w-fit py-3 px-4 text-white font-semibold rounded-md text-xs"
               type="submit"
             >
-              Add Color
+              {`${colorId !== undefined ? "Edit" : "Add"}`} Color
             </button>
           </form>
         </div>

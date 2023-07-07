@@ -4,6 +4,10 @@ import Headbar from "./Headbar.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+{
+  /*onContextMenu={(e) => e.preventDefault()}*/
+}
+
 function Layout() {
   return (
     <>
@@ -14,7 +18,7 @@ function Layout() {
         <div className="w-full h-screen bg-gray-100 overflow-scroll">
           <ToastContainer
             position="bottom-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

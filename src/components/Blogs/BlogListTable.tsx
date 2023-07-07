@@ -3,6 +3,10 @@ import { ColumnsType } from "antd/es/table";
 import { Link } from "react-router-dom";
 import { LuEdit } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteBlog, getBlogs } from "../../features/blogs/blogSlice.ts";
+import CustomModal from "../CustomModal.tsx";
 
 interface DataType {
   key: number;
@@ -34,6 +38,27 @@ const columns: ColumnsType<DataType> = [
 
 function BlogListTable({ blogsData }: any) {
   const data: DataType[] = [];
+  const [open, setOpen] = useState(false);
+  const [blogId, setBlogId] = useState("");
+  const dispatch = useDispatch();
+
+  // Modal
+  const showModal = (id: string) => {
+    setOpen(true);
+    setBlogId(id);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  // Delete Blog
+  const delBlog = (id: string) => {
+    // @ts-ignore
+    dispatch(deleteBlog(id));
+    setOpen(false);
+    // @ts-ignore
+    dispatch(getBlogs());
+  };
 
   for (let i = 0; i < blogsData.length; i++) {
     data.push({
@@ -42,12 +67,16 @@ function BlogListTable({ blogsData }: any) {
       category: blogsData[i].category,
       action: (
         <div className="flex items-center gap-1">
-          <Link to="">
+          <Link to={`/admin/blogs/add-blog/${blogsData[i]._id}`}>
             <LuEdit />
           </Link>
-          <Link className="text-lg text-red-600" to="">
+          <button
+            type={"button"}
+            className="text-lg text-red-600"
+            onClick={() => showModal(blogsData[i]._id)}
+          >
             <MdDeleteOutline />
-          </Link>
+          </button>
         </div>
       ),
     });
@@ -56,6 +85,12 @@ function BlogListTable({ blogsData }: any) {
   return (
     <div className="shadow-sm">
       <Table columns={columns} dataSource={data} size="middle" />
+      <CustomModal
+        open={open}
+        hideModal={hideModal}
+        performAction={() => delBlog(blogId)}
+        title={"Are you sure you want to delete this blog?"}
+      />
     </div>
   );
 }

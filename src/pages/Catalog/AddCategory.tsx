@@ -2,11 +2,16 @@ import PageTitle from "../../components/PageTitle.tsx";
 import CustomInput from "../../components/CustomInput.tsx";
 import { object, string } from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { createProductCategory } from "../../features/productCategory/productCategorySlice.ts";
+import {
+  createProductCategory,
+  getProductCategory,
+  updateProductCategory,
+} from "../../features/productCategory/productCategorySlice.ts";
+import { resetState } from "../../utils/reset_redux_states.ts";
 
 let schema = object({
   title: string().required("Product Category name is required"),
@@ -15,40 +20,74 @@ let schema = object({
 function AddCategory() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  //
+  // RTK
   const newCategory = useSelector((state: any) => state.productCategory);
-  const { isSuccess, isError, isLoading, createdProductCategory } = newCategory;
+  const {
+    isSuccess,
+    isError,
+    isLoading,
+    createdProductCategory,
+    categoryName,
+    updatedProductCategory,
+  } = newCategory;
 
+  // Product Category id
+  const pcId = location.pathname.split("/")[4];
+  //
+  useEffect(() => {
+    if (pcId !== undefined) {
+      // @ts-ignore
+      dispatch(getProductCategory(pcId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [pcId]);
+
+  // Toast
   useEffect(() => {
     if (isSuccess && createdProductCategory) {
       toast.success("🦄 Product Category added successfully!", {});
+    }
+    if (isSuccess && updatedProductCategory) {
+      toast.success("🦄 Product Category updated successfully!", {});
+      navigate("/admin/catalog/category-list");
     }
     if (isError) {
       toast.error("🦄 Something went wrong!!", {});
     }
   }, [isSuccess, isError, isLoading, createdProductCategory]);
 
-  //
+  // Formik
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: "",
+      title: categoryName || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      // @ts-ignore
-      dispatch(createProductCategory(values));
-      formik.resetForm();
-      setTimeout(() => {
-        navigate("/admin/category/category-list");
-      }, 3000);
+      if (pcId !== undefined) {
+        const data = { id: pcId, productCategoryData: values };
+        // @ts-ignore
+        dispatch(updateProductCategory(data));
+        dispatch(resetState());
+      } else {
+        // @ts-ignore
+        dispatch(createProductCategory(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState());
+          navigate("/admin/catalog/category-list");
+        }, 100);
+      }
     },
   });
 
   return (
     <>
       <main className="bg-white h-screen p-8">
-        <PageTitle title="Add Category" />
+        <PageTitle title={`${pcId !== undefined ? "Edit" : "Add"} Category`} />
 
         <div>
           <form onSubmit={formik.handleSubmit}>
@@ -72,7 +111,7 @@ function AddCategory() {
               className="bg-secondary w-fit py-3 px-4 text-white font-semibold rounded-md text-xs"
               type="submit"
             >
-              Add Category
+              {`${pcId !== undefined ? "Edit" : "Add"}`} Category
             </button>
           </form>
         </div>

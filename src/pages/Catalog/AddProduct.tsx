@@ -15,6 +15,7 @@ import { getColors } from "../../features/color/colorSlice.ts";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Multiselect from "react-widgets/Multiselect";
+import { resetState } from "../../utils/reset_redux_states.ts";
 
 const modules = {
   toolbar: [
@@ -136,8 +137,10 @@ function AddProduct() {
       dispatch(createProduct(values));
       formik.resetForm();
       setColor([]);
+      setImages([]);
       setTimeout(() => {
-        navigate("/admin/category/product-list");
+        dispatch(resetState());
+        navigate("/admin/catalog/product-list");
       }, 3000);
     },
   });

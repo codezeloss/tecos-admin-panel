@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import productService from "./productService.ts";
+import { resetState } from "../../utils/reset_redux_states.ts";
 
 export interface ProductsState {}
 
@@ -75,7 +76,8 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         // @ts-ignore
         state.message = action.error;
-      });
+      })
+      .addCase(resetState, () => initialState);
   },
 });
 

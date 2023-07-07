@@ -18,7 +18,9 @@ export const uploadImg = createAsyncThunk(
   async (data, thunkAPI: any) => {
     try {
       const formData = new FormData();
+      // @ts-ignore
       for (let i = 0; i < data.length; i++) {
+        // @ts-ignore
         formData.append("images", data[i]);
       }
       return await uploadService.uploadImg(formData);
@@ -27,7 +29,6 @@ export const uploadImg = createAsyncThunk(
     }
   }
 );
-// **
 
 // ** @@ DELETE
 export const deleteImg = createAsyncThunk(
@@ -67,7 +68,7 @@ export const uploadSlice = createSlice({
       .addCase(deleteImg.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteImg.fulfilled, (state, action) => {
+      .addCase(deleteImg.fulfilled, (state) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;

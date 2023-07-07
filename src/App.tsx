@@ -19,6 +19,8 @@ import AddColor from "./pages/Catalog/AddColor.tsx";
 import AddCategory from "./pages/Catalog/AddCategory.tsx";
 import AddBrand from "./pages/Catalog/AddBrand.tsx";
 import AddProduct from "./pages/Catalog/AddProduct.tsx";
+import AddCoupon from "./pages/Coupons/AddCoupon.tsx";
+import CouponsList from "./pages/Coupons/CouponsList.tsx";
 
 function App() {
   return (
@@ -29,36 +31,44 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/admin" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path="/admin/enquiries" element={<Enquiries />} />
-          <Route path="/admin/blogs/list" element={<BlogList />} />
+          <Route path="/admin/catalog/add-product" element={<AddProduct />} />
+          <Route path="/admin/catalog/product-list" element={<ProductList />} />
+          <Route path="/admin/catalog/add-brand" element={<AddBrand />} />
+          <Route path="/admin/catalog/add-brand/:id" element={<AddBrand />} />
+          <Route path="/admin/catalog/brand-list" element={<BrandList />} />
+          <Route path="/admin/catalog/add-color" element={<AddColor />} />
+          <Route path="/admin/catalog/add-color/:id" element={<AddColor />} />
+          <Route path="/admin/catalog/color-list" element={<ColorList />} />
+          <Route path="/admin/catalog/add-category" element={<AddCategory />} />
           <Route
-            path="/admin/blogs/category-list"
-            element={<BlogCategoryList />}
+            path="/admin/catalog/add-category/:id"
+            element={<AddCategory />}
+          />
+          <Route
+            path="/admin/catalog/category-list"
+            element={<CategoryList />}
           />
           <Route path="/admin/blogs/add-blog" element={<AddBlog />} />
+          <Route path="/admin/blogs/add-blog/:id" element={<AddBlog />} />
+          <Route path="/admin/blogs/list" element={<BlogList />} />
           <Route
             path="/admin/blogs/add-blog-category"
             element={<AddBlogCategory />}
           />
+          <Route
+            path="/admin/blogs/add-blog-category/:id"
+            element={<AddBlogCategory />}
+          />
+          <Route
+            path="/admin/blogs/category-list"
+            element={<BlogCategoryList />}
+          />
+          <Route path="/admin/coupons/add-coupon" element={<AddCoupon />} />
+          <Route path="/admin/coupons/add-coupon/:id" element={<AddCoupon />} />
+          <Route path="/admin/coupons/coupons-list" element={<CouponsList />} />
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/customers" element={<Customers />} />
-          <Route
-            path="/admin/category/product-list"
-            element={<ProductList />}
-          />
-          <Route path="/admin/category/brand-list" element={<BrandList />} />
-          <Route
-            path="/admin/category/category-list"
-            element={<CategoryList />}
-          />
-          <Route path="/admin/category/color-list" element={<ColorList />} />
-          <Route path="/admin/category/add-color" element={<AddColor />} />
-          <Route
-            path="/admin/category/add-category"
-            element={<AddCategory />}
-          />
-          <Route path="/admin/category/add-brand" element={<AddBrand />} />
-          <Route path="/admin/category/add-product" element={<AddProduct />} />
+          <Route path="/admin/enquiries" element={<Enquiries />} />
         </Route>
       </Routes>
     </Router>

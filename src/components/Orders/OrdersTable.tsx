@@ -52,7 +52,7 @@ function OrdersTable({ ordersData }: any) {
         (i: any, j: React.Key | null | undefined) => {
           return (
             <ul key={j}>
-              <li>{i.product.title}</li>
+              <li>{i?.product?.title}</li>
             </ul>
           );
         }
