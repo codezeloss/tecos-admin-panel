@@ -1,8 +1,8 @@
-import PageTitle from "../components/PageTitle.tsx";
-import OrdersTable from "../components/Orders/OrdersTable.tsx";
+import PageTitle from "../../components/PageTitle.tsx";
+import OrdersTable from "../../components/Orders/OrdersTable.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getOrders } from "../features/order/orderSlice.ts";
+import { getOrders } from "../../features/order/orderSlice.ts";
 
 function Orders() {
   const dispatch = useDispatch();

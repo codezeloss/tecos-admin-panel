@@ -1,8 +1,16 @@
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { Link } from "react-router-dom";
-import { LuEdit } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
+import { HiOutlineEye } from "react-icons/hi";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import CustomModal from "../CustomModal.tsx";
+import {
+  deleteEnquiry,
+  getEnquiries,
+  updateEnquiry,
+} from "../../features/enquiry/enquirySlice.ts";
 
 interface DataType {
   key: number;
@@ -53,6 +61,41 @@ const columns: ColumnsType<DataType> = [
 
 function EnquiriesTable({ enquiriesData }: any) {
   const data: DataType[] = [];
+  const [open, setOpen] = useState(false);
+  const [enquiryId, setEnquiryId] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(getEnquiries());
+  }, []);
+
+  // Modal
+  const showModal = (id: string) => {
+    setOpen(true);
+    setEnquiryId(id);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  // Delete Color
+  const delEnquiry = (id: string) => {
+    // @ts-ignore
+    dispatch(deleteEnquiry(id));
+    setOpen(false);
+    // @ts-ignore
+    dispatch(getEnquiries());
+  };
+
+  // Handle Enquiry Status Change
+  const setEnquiryStatus = (e: string, id: string) => {
+    console.log(e, id);
+
+    const data = { id, enquiryData: e };
+    // @ts-ignore
+    dispatch(updateEnquiry(data));
+  };
 
   for (let i = 0; i < enquiriesData.length; i++) {
     data.push({
@@ -64,24 +107,36 @@ function EnquiriesTable({ enquiriesData }: any) {
       status: (
         <select
           className="py-2 px-4 bg-gray-100 text-gray-800 w-full text-sm outline-none font-medium mt-1"
-          name=""
-          id=""
           placeholder="category 01"
+          defaultValue={
+            enquiriesData[i].status ? enquiriesData[i].status : "Submitted"
+          }
+          onChange={(e) =>
+            setEnquiryStatus(e.target.value, enquiriesData[i]._id)
+          }
         >
-          <option value="">Submitted</option>
-          <option value="">Submitted</option>
-          <option value="">Submitted</option>
+          <option value="Submitted">Submitted</option>
+          <option value="Contacted">Contacted</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
         </select>
       ),
       date: new Date(enquiriesData[i].createdAt).toLocaleString(),
       action: (
         <div className="flex items-center gap-1">
-          <Link to="">
-            <LuEdit />
+          <Link
+            className="text-lg text-gray-600"
+            to={`/admin/enquiries/${enquiriesData[i]._id}`}
+          >
+            <HiOutlineEye />
           </Link>
-          <Link className="text-lg text-red-600" to="">
+          <button
+            type={"button"}
+            className="text-lg text-red-600"
+            onClick={() => showModal(enquiriesData[i]._id)}
+          >
             <MdDeleteOutline />
-          </Link>
+          </button>
         </div>
       ),
     });
@@ -90,6 +145,12 @@ function EnquiriesTable({ enquiriesData }: any) {
   return (
     <div>
       <Table columns={columns} dataSource={data} size="middle" />
+      <CustomModal
+        open={open}
+        hideModal={hideModal}
+        performAction={() => delEnquiry(enquiryId)}
+        title={"Are you sure you want to delete this enquiry?"}
+      />
     </div>
   );
 }

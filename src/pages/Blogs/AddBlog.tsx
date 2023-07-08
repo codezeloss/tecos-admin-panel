@@ -57,6 +57,7 @@ function AddBlog() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  //
   useEffect(() => {
     // @ts-ignore
     dispatch(getBlogCategories());

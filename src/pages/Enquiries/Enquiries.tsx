@@ -1,14 +1,17 @@
-import PageTitle from "../components/PageTitle.tsx";
-import EnquiriesTable from "../components/Enquiries/EnquiriesTable.tsx";
+import PageTitle from "../../components/PageTitle.tsx";
+import EnquiriesTable from "../../components/Enquiries/EnquiriesTable.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getEnquiries } from "../features/enquiry/enquirySlice.ts";
+import { getEnquiries } from "../../features/enquiry/enquirySlice.ts";
+import { resetState } from "../../utils/reset_redux_states.ts";
 
 function Enquiries() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     return () => {
+      // @ts-ignore
+      dispatch(resetState());
       // @ts-ignore
       dispatch(getEnquiries());
     };

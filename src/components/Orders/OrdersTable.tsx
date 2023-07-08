@@ -3,7 +3,6 @@ import { ColumnsType } from "antd/es/table";
 import { Link } from "react-router-dom";
 import { LuEdit } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
-import React from "react";
 
 interface DataType {
   key: number;
@@ -48,14 +47,13 @@ function OrdersTable({ ordersData }: any) {
     data.push({
       key: i + 1,
       name: ordersData[i].orderBy.firstname,
-      product: ordersData[i].products.map(
-        (i: any, j: React.Key | null | undefined) => {
-          return (
-            <ul key={j}>
-              <li>{i?.product?.title}</li>
-            </ul>
-          );
-        }
+      product: (
+        <Link
+          className="text-blue-500 font-bold"
+          to={`/admin/orders/${ordersData[i]._id}`}
+        >
+          View Orders
+        </Link>
       ),
       amount: ordersData[i].paymentIntent.amount,
       date: new Date(ordersData[i].createdAt).toLocaleString(),

@@ -4,10 +4,10 @@ import ResetPassword from "./pages/ResetPassword.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import Layout from "./components/Layout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
-import Enquiries from "./pages/Enquiries.tsx";
+import Enquiries from "./pages/Enquiries/Enquiries.tsx";
 import BlogCategoryList from "./pages/Blogs/BlogCategoryList.tsx";
 import BlogList from "./pages/Blogs/BlogList.tsx";
-import Orders from "./pages/Orders.tsx";
+import Orders from "./pages/Orders/Orders.tsx";
 import Customers from "./pages/Customers.tsx";
 import ProductList from "./pages/Catalog/ProductList.tsx";
 import BrandList from "./pages/Catalog/BrandList.tsx";
@@ -21,6 +21,8 @@ import AddBrand from "./pages/Catalog/AddBrand.tsx";
 import AddProduct from "./pages/Catalog/AddProduct.tsx";
 import AddCoupon from "./pages/Coupons/AddCoupon.tsx";
 import CouponsList from "./pages/Coupons/CouponsList.tsx";
+import ViewEnquiry from "./pages/Enquiries/ViewEnquiry.tsx";
+import ViewOrder from "./pages/Orders/ViewOrder.tsx";
 
 function App() {
   return (
@@ -67,8 +69,10 @@ function App() {
           <Route path="/admin/coupons/add-coupon/:id" element={<AddCoupon />} />
           <Route path="/admin/coupons/coupons-list" element={<CouponsList />} />
           <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/orders/:id" element={<ViewOrder />} />
           <Route path="/admin/customers" element={<Customers />} />
           <Route path="/admin/enquiries" element={<Enquiries />} />
+          <Route path="/admin/enquiries/:id" element={<ViewEnquiry />} />
         </Route>
       </Routes>
     </Router>

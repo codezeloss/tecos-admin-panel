@@ -8,6 +8,8 @@ import { resetState } from "../../utils/reset_redux_states.ts";
 function CouponsList() {
   const dispatch = useDispatch();
 
+  const couponState = useSelector((state: any) => state.coupon.coupons);
+
   useEffect(() => {
     return () => {
       // @ts-ignore
@@ -16,8 +18,6 @@ function CouponsList() {
       dispatch(getAllCoupons());
     };
   }, []);
-
-  const couponState = useSelector((state: any) => state.coupon.coupons);
 
   return (
     <>
