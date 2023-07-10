@@ -34,6 +34,10 @@ function App() {
         <Route path="/admin" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="/admin/catalog/add-product" element={<AddProduct />} />
+          <Route
+            path="/admin/catalog/add-product/:id"
+            element={<AddProduct />}
+          />
           <Route path="/admin/catalog/product-list" element={<ProductList />} />
           <Route path="/admin/catalog/add-brand" element={<AddBrand />} />
           <Route path="/admin/catalog/add-brand/:id" element={<AddBrand />} />

@@ -3,6 +3,13 @@ import { ColumnsType } from "antd/es/table";
 import { Link } from "react-router-dom";
 import { LuEdit } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import CustomModal from "../CustomModal.tsx";
+import {
+  deleteProduct,
+  getProducts,
+} from "../../features/product/productSlice.ts";
 
 interface DataType {
   key: number;
@@ -58,24 +65,51 @@ const columns: ColumnsType<DataType> = [
 
 function ProductTable({ productsData }: any) {
   const data: DataType[] = [];
+  const [open, setOpen] = useState(false);
+  const [productId, setProductId] = useState("");
+  const dispatch = useDispatch();
+
+  // Modal
+  const showModal = (id: string) => {
+    setOpen(true);
+    setProductId(id);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  // Delete Brand
+  const delProduct = (id: string) => {
+    // @ts-ignore
+    dispatch(deleteProduct(id));
+    setOpen(false);
+    setTimeout(() => {
+      // @ts-ignore
+      dispatch(getProducts());
+    }, 100);
+  };
 
   for (let i = 0; i < productsData.length; i++) {
     data.push({
       key: i + 1,
       title: productsData[i].title,
       price: productsData[i].price,
-      color: productsData[i].color,
+      color: productsData[i].color.map((c: any) => <p>{`${c.color} `}</p>),
       brand: productsData[i].brand,
       quantity: productsData[i].quantity,
       category: productsData[i].category,
       action: (
         <div className="flex items-center gap-1">
-          <Link to="">
+          <Link to={`/admin/catalog/add-product/${productsData[i]._id}`}>
             <LuEdit />
           </Link>
-          <Link className="text-lg text-red-600" to="">
+          <button
+            type="button"
+            className="text-lg text-red-600"
+            onClick={() => showModal(productsData[i]._id)}
+          >
             <MdDeleteOutline />
-          </Link>
+          </button>
         </div>
       ),
     });
@@ -84,6 +118,12 @@ function ProductTable({ productsData }: any) {
   return (
     <div className="shadow-sm">
       <Table columns={columns} dataSource={data} size="middle" />
+      <CustomModal
+        open={open}
+        hideModal={hideModal}
+        performAction={() => delProduct(productId)}
+        title={"Are you sure you want to delete this product?"}
+      />
     </div>
   );
 }
