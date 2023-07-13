@@ -79,7 +79,7 @@ function AddCategory() {
         setTimeout(() => {
           dispatch(resetState());
           navigate("/admin/catalog/category-list");
-        }, 100);
+        }, 1000);
       }
     },
   });

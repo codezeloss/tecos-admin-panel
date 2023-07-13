@@ -5,9 +5,7 @@ export interface UserState {}
 
 // Get user from LocalStorage
 // @ts-ignore
-const getUserFromLocalStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
+const getUserFromLocalStorage = localStorage.getItem("user") || null;
 
 // initial states
 const initialState = {

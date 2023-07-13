@@ -79,7 +79,7 @@ function AddBrand() {
         setTimeout(() => {
           dispatch(resetState());
           navigate("/admin/catalog/brand-list");
-        }, 100);
+        }, 1000);
       }
     },
   });

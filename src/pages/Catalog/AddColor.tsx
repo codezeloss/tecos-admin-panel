@@ -79,7 +79,7 @@ function AddColor() {
         setTimeout(() => {
           dispatch(resetState());
           navigate("/admin/catalog/color-list");
-        }, 100);
+        }, 1000);
       }
     },
   });

@@ -1,7 +1,7 @@
 import PageTitle from "../../components/PageTitle.tsx";
 import CustomInput from "../../components/CustomInput.tsx";
 import ReactQuill from "react-quill";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { array, number, object, string } from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,9 +18,9 @@ import {
 import { getColors } from "../../features/color/colorSlice.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Multiselect from "react-widgets/Multiselect";
 import { resetState } from "../../utils/reset_redux_states.ts";
 import { getBrands } from "../../features/brand/brandSlice.ts";
+import Multiselect from "react-widgets/Multiselect";
 
 const modules = {
   toolbar: [
@@ -127,6 +127,7 @@ function AddProduct() {
       color: i.title,
     });
   });
+
   let img: any[] = [];
   imageState.forEach((i: any) => {
     img.push({
@@ -185,7 +186,7 @@ function AddProduct() {
         setTimeout(() => {
           dispatch(resetState());
           navigate("/admin/catalog/product-list");
-        }, 300);
+        }, 1000);
       }
     },
   });
@@ -339,9 +340,8 @@ function AddProduct() {
                 dataKey="id"
                 textField="color"
                 data={colorOptions}
-                onChange={(e: any) => {
-                  setColor(e);
-                }}
+                onBlur={formik.handleBlur("color")}
+                onChange={formik.handleChange("color")}
                 value={formik.values.color}
               />
               {formik.touched.color && formik.errors.color ? (
@@ -393,30 +393,32 @@ function AddProduct() {
                 </Dropzone>
               </div>
               <div className="my-6 relative z-10">
-                {imageState?.map((i: any) => {
-                  // @ts-ignore
-                  return (
-                    <div>
-                      <img
-                        className=""
-                        src={i.url}
-                        alt={"Uploaded Image"}
-                        width={300}
-                        height={300}
-                      />
-                      <button
-                        className="bg-white py-1 px-2 rounded-full text-xs font-bold text-gray-800 absolute left-1 top-1 z-20"
-                        type="button"
-                        onClick={() => {
-                          // @ts-ignore
-                          dispatch(deleteImg(i.public_id));
-                        }}
-                      >
-                        X
-                      </button>
-                    </div>
-                  );
-                })}
+                {imageState?.map(
+                  (i: any, index: React.Key | null | undefined) => {
+                    // @ts-ignore
+                    return (
+                      <div key={index}>
+                        <img
+                          className=""
+                          src={i?.url}
+                          alt={"Uploaded Image"}
+                          width={300}
+                          height={300}
+                        />
+                        <button
+                          className="bg-white py-1 px-2 rounded-full text-xs font-bold text-gray-800 absolute left-1 top-1 z-20"
+                          type="button"
+                          onClick={() => {
+                            // @ts-ignore
+                            dispatch(deleteImg(i?.public_id));
+                          }}
+                        >
+                          X
+                        </button>
+                      </div>
+                    );
+                  }
+                )}
               </div>
             </div>
 
