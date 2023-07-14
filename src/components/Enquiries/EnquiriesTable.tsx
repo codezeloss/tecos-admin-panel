@@ -90,8 +90,6 @@ function EnquiriesTable({ enquiriesData }: any) {
 
   // Handle Enquiry Status Change
   const setEnquiryStatus = (e: string, id: string) => {
-    console.log(e, id);
-
     const data = { id, enquiryData: e };
     // @ts-ignore
     dispatch(updateEnquiry(data));

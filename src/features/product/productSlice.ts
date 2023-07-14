@@ -121,19 +121,7 @@ export const productSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         // @ts-ignore
-        state.updatedProductTitle = action.payload;
-        // @ts-ignore
-        state.updatedProductDesc = action.payload;
-        // @ts-ignore
-        state.updatedProductPrice = action.payload;
-        // @ts-ignore
-        state.updatedProductBrand = action.payload;
-        // @ts-ignore
-        state.updatedProductCategory = action.payload;
-        // @ts-ignore
-        state.updatedProductTags = action.payload;
-        // @ts-ignore
-        state.updatedProductQuanity = action.payload;
+        state.updatedProduct = action.payload;
       })
       .addCase(updateProduct.rejected, (state, action) => {
         state.isLoading = false;
@@ -166,7 +154,7 @@ export const productSlice = createSlice({
         // @ts-ignore
         state.productColor = action.payload.color.color;
         // @ts-ignore
-        state.productImages = action.payload.images.url;
+        state.productImages = action.payload.images;
       })
       .addCase(getProduct.rejected, (state, action) => {
         state.isLoading = false;

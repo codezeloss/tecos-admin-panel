@@ -58,9 +58,8 @@ let schema = object({
   category: string().required("Category is required"),
   tags: string().required("Tag is required"),
   quantity: string().required("Quantity is required"),
-  color: array()
-    .min(1, "Pick at least one color")
-    .required("Color is required"),
+  color: array(),
+  images: array(),
 });
 
 function AddProduct() {
@@ -88,7 +87,8 @@ function AddProduct() {
     (state: any) => state.productCategory.productCategories
   );
   const colorState = useSelector((state: any) => state.color.colors);
-  const imageState = useSelector((state: any) => state.upload.images);
+  const imageState = useSelector((state: any) => state.upload.uploadedImages);
+  console.log(imageState);
   const newProduct = useSelector((state: any) => state.product);
   const {
     isSuccess,
@@ -119,23 +119,6 @@ function AddProduct() {
     }
   }, [productId]);
 
-  //
-  let colorOptions: any[] = [];
-  colorState.forEach((i: any) => {
-    colorOptions.push({
-      _id: i._id,
-      color: i.title,
-    });
-  });
-
-  let img: any[] = [];
-  imageState.forEach((i: any) => {
-    img.push({
-      public_id: i.public_id,
-      url: i.url,
-    });
-  });
-
   // Toast
   useEffect(() => {
     if (isSuccess && createdProduct) {
@@ -149,6 +132,25 @@ function AddProduct() {
       toast.error("Something went wrong!!", {});
     }
   }, [isSuccess, isError, isLoading, createdProduct]);
+
+  //
+  let colorOptions: any[] = [];
+  colorState.forEach((i: any) => {
+    colorOptions.push({
+      _id: i._id,
+      color: i.title,
+    });
+  });
+
+  let img: any[] = [];
+  imageState.forEach((i: any) => {
+    img.push({
+      asset_id: i.asset_id,
+      public_id: i.public_id,
+      url: i.url,
+    });
+  });
+  console.log("img:", img);
 
   // Formik
   useEffect(() => {
@@ -173,6 +175,7 @@ function AddProduct() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
+      console.log(values);
       if (productId !== undefined) {
         const data = { id: productId, productData: values };
         // @ts-ignore
@@ -269,9 +272,10 @@ function AddProduct() {
                 value={formik.values.brand}
               >
                 <option value="">select</option>
-                {brandState.map((i: any) => {
-                  return <option value={i.title}>{i.title}</option>;
-                })}
+                {brandState &&
+                  brandState.map((i: any) => {
+                    return <option value={i.title}>{i.title}</option>;
+                  })}
               </select>
               {formik.touched.brand && formik.errors.brand ? (
                 <div className="error">
@@ -294,9 +298,10 @@ function AddProduct() {
                 value={formik.values.category}
               >
                 <option value="">select</option>
-                {productCategoryState.map((i: any) => {
-                  return <option value={i.title}>{i.title}</option>;
-                })}
+                {productCategoryState &&
+                  productCategoryState.map((i: any) => {
+                    return <option value={i.title}>{i.title}</option>;
+                  })}
               </select>
               {formik.touched.category && formik.errors.category ? (
                 <div className="error">
@@ -400,7 +405,7 @@ function AddProduct() {
                       <div key={index}>
                         <img
                           className=""
-                          src={i?.url}
+                          src={i.url}
                           alt={"Uploaded Image"}
                           width={300}
                           height={300}
@@ -410,7 +415,7 @@ function AddProduct() {
                           type="button"
                           onClick={() => {
                             // @ts-ignore
-                            dispatch(deleteImg(i?.public_id));
+                            dispatch(deleteImg(i.public_id));
                           }}
                         >
                           X

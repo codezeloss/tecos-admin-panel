@@ -5,7 +5,7 @@ export interface uploadsState {}
 
 // initial states
 const initialState = {
-  images: [],
+  uploadedImages: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -56,14 +56,14 @@ export const uploadSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.images = action.payload;
+        state.uploadedImages = action.payload;
       })
       .addCase(uploadImg.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         // @ts-ignore
-        state.images = action.payload;
+        state.message = action.error;
       })
       .addCase(deleteImg.pending, (state) => {
         state.isLoading = true;
@@ -72,7 +72,7 @@ export const uploadSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.images = [];
+        state.uploadedImages = [];
       })
       .addCase(deleteImg.rejected, (state, action) => {
         state.isLoading = false;
