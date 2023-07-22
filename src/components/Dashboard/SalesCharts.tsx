@@ -1,10 +1,10 @@
 import { Column } from "@ant-design/plots";
 
-function IncomeCharts({ monthlyIncomeData }: any) {
+function SalesCharts({ monthlySalesData }: any) {
   const config: any = {
-    data: monthlyIncomeData,
+    data: monthlySalesData,
     xField: "type",
-    yField: "income",
+    yField: "sales",
     color: () => {
       return "#ffa726";
     },
@@ -25,7 +25,7 @@ function IncomeCharts({ monthlyIncomeData }: any) {
       type: {
         alias: "Month",
       },
-      income: {
+      sales: {
         alias: "Income",
       },
     },
@@ -33,7 +33,7 @@ function IncomeCharts({ monthlyIncomeData }: any) {
 
   return (
     <div className="w-[50%]">
-      <h3 className="text-xl mt-10 mb-6 font-semibold">Income Statics</h3>
+      <h3 className="text-xl mt-10 mb-6 font-semibold">Sales Statics</h3>
       <div className="w-full">
         <Column {...config} />
       </div>
@@ -41,4 +41,4 @@ function IncomeCharts({ monthlyIncomeData }: any) {
   );
 }
 
-export default IncomeCharts;
+export default SalesCharts;
