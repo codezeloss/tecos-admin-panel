@@ -23,69 +23,34 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "product",
   },
   {
+    title: "Total Price",
+    dataIndex: "price",
+  },
+  {
+    title: "Total Price After Discount",
+    dataIndex: "dprice",
+  },
+  {
     title: "Status",
     dataIndex: "status",
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "5",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "John Brown",
-    product: 32,
-    status: "New York No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    product: 42,
-    status: "London No. 1 Lake Park",
-  },
-  {
-    key: "9",
-    name: "Joe Black",
-    product: 32,
-    status: "Sydney No. 1 Lake Park",
-  },
-];
+function OrdersTable({ ordersData }: any) {
+  let data: any[] = [];
+  for (let i = 0; i < ordersData?.length; i++) {
+    data.push({
+      key: i,
+      name: ordersData[i]?.user.firstname + " " + ordersData[i]?.user.lastname,
+      product: ordersData[i]?.orderItems.length,
+      price: ordersData[i]?.totalPrice ? ordersData[i]?.totalPrice : "--",
+      dprice: ordersData[i]?.totalPriceAfterDiscount
+        ? ordersData[i]?.totalPriceAfterDiscount
+        : "--",
+      status: ordersData[i]?.paymentInfos?.orderStatus,
+    });
+  }
 
-function OrdersTable() {
   return (
     <div className="w-full">
       <h3 className="text-xl mt-10 mb-6 font-semibold">Recent Orders</h3>

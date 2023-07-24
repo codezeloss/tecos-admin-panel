@@ -1,23 +1,12 @@
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { Link, useLocation } from "react-router-dom";
-import { LuEdit } from "react-icons/lu";
-import { MdDeleteOutline } from "react-icons/md";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/PageTitle.tsx";
 import { useEffect } from "react";
-import { getOrders, getUserOrders } from "../../features/order/orderSlice.ts";
+import { getSingleOrder } from "../../features/order/orderSlice.ts";
 
-interface DataType {
-  key: number;
-  name: string;
-  brand: string;
-  count: number;
-  amount: number;
-  color: string;
-  date: string;
-  action: any;
-}
+interface DataType {}
 
 const columns: ColumnsType<DataType> = [
   {
@@ -45,55 +34,53 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "color",
   },
   {
-    title: "Date",
-    dataIndex: "date",
-  },
-  {
     title: "Action",
     dataIndex: "action",
   },
 ];
 
 function ViewOrder() {
-  const data: DataType[] = [];
+  const data: any[] = [];
   const location = useLocation();
   const dispatch = useDispatch();
 
-  // RTK
-  const userOrdersState = useSelector((state: any) => state.order);
-  console.log(userOrdersState.userOrders);
+  // ** RTK
+  const userOrdersState = useSelector((state: any) => state.order.singleOrder);
 
-  // Get the user ID
-  const userId = location.pathname.split("/")[3];
-  console.log(userId);
+  // ** Get the order ID
+  const orderId = location.pathname.split("/")[3];
+
+  // ** Get the Product with its ID
   useEffect(() => {
     // @ts-ignore
-    dispatch(getOrders());
-    // @ts-ignore
-    dispatch(getUserOrders(userId));
+    dispatch(getSingleOrder(orderId));
   }, []);
 
-  //
-  for (let i = 0; i < userOrdersState.length; i++) {
+  // ** Push data to Table
+  for (let i = 0; i < userOrdersState.orderItems?.length; i++) {
     data.push({
       key: i + 1,
-      name: userOrdersState[i].products.product.title,
-      brand: userOrdersState[i].products.product.brand,
-      count: userOrdersState[i].products.product.count,
-      amount: userOrdersState[i].products.product.price,
-      color: userOrdersState[i].products.product.color,
-      date: new Date(
-        userOrdersState[i].products.product.createdAt
-      ).toLocaleString(),
+      name: userOrdersState?.orderItems[i]?.product?.title,
+      brand: userOrdersState?.orderItems[i]?.product?.brand,
+      count: userOrdersState?.orderItems.length,
+      amount: userOrdersState?.orderItems[i]?.price,
+      color: userOrdersState?.orderItems[i]?.color?.title,
       action: (
-        <div className="flex items-center gap-1">
-          <Link to="">
-            <LuEdit />
-          </Link>
-          <Link className="text-lg text-red-600" to="">
-            <MdDeleteOutline />
-          </Link>
-        </div>
+        <>
+          <select
+            className="py-2 px-4 bg-gray-100 text-gray-800 w-full text-sm outline-none font-medium mt-1"
+            name=""
+            id=""
+          >
+            <option value="Ordered" disabled selected>
+              Ordered
+            </option>
+            <option value="Processed">Processed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Out for Delivery">Out for Delivery</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </>
       ),
     });
   }

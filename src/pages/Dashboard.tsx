@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
   getMonthlyOrdersData,
+  getOrders,
   getYearlyStatsData,
 } from "../features/order/orderSlice.ts";
 import SalesCharts from "../components/Dashboard/SalesCharts.tsx";
@@ -19,9 +20,14 @@ function Dashboard() {
   const monthlyOrdersState = useSelector(
     (state: any) => state.order?.monthlyOrders
   );
-  const yearlyStatsState = useSelector(
-    (state: any) => state.order?.yearlyStats
-  );
+
+  // ** RTK - Yearly Stats State
+  const yearlyStatsState = useSelector((state: any) => state.order);
+  const { yearlyStats } = yearlyStatsState;
+
+  // ** RTK - Orders State
+  const ordersState = useSelector((state: any) => state.order);
+  const { orders } = ordersState;
 
   // **
   useEffect(() => {
@@ -29,6 +35,8 @@ function Dashboard() {
     dispatch(getMonthlyOrdersData());
     // @ts-ignore
     dispatch(getYearlyStatsData());
+    // @ts-ignore
+    dispatch(getOrders());
   }, []);
 
   // **
@@ -76,8 +84,8 @@ function Dashboard() {
           <h3 className="text-xl mt-6 mb-4 font-semibold">Status</h3>
           <div className="flex items-center gap-3 mb-4">
             <StatusCards
-              total={yearlyStatsState[1].amount}
-              count={yearlyStatsState[1].count}
+              total={yearlyStatsState && yearlyStats[0]?.amount}
+              count={yearlyStatsState && yearlyStats[0]?.count}
             />
           </div>
 
@@ -86,8 +94,7 @@ function Dashboard() {
             <SalesCharts monthlySalesData={monthlySalesData} />
           </div>
 
-          <OrdersTable />
-          {/*<RecentReviewsTable />*/}
+          <OrdersTable ordersData={orders} />
         </div>
       </main>
     </>

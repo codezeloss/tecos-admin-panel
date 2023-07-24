@@ -24,6 +24,30 @@ export const getOrders = createAsyncThunk(
   }
 );
 
+// ** @@ GET SINGLE ORDER
+export const getSingleOrder = createAsyncThunk(
+  "order/single-order",
+  async (id: string, thunkAPI: any) => {
+    try {
+      return await orderService.getSingleOneOrder(id);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+// ** @@ PUT SINGLE ORDER
+export const updateSingleOrderStatus = createAsyncThunk(
+  "order/update-order-status",
+  async (data: any, thunkAPI: any) => {
+    try {
+      return await orderService.updateOrderStatus(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 // ** @@ GET USER ORDERS
 export const getUserOrders = createAsyncThunk(
   "order/user-orders",
@@ -78,6 +102,42 @@ export const orderSlice = createSlice({
         state.message = "success";
       })
       .addCase(getOrders.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        // @ts-ignore
+        state.message = action.error;
+      })
+      .addCase(getSingleOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        // @ts-ignore
+        state.singleOrder = action.payload;
+        state.message = "success";
+      })
+      .addCase(getSingleOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        // @ts-ignore
+        state.message = action.error;
+      })
+      .addCase(updateSingleOrderStatus.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateSingleOrderStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        // @ts-ignore
+        state.singleOrder = action.payload;
+        state.message = "success";
+      })
+      .addCase(updateSingleOrderStatus.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

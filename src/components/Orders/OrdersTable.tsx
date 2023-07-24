@@ -46,7 +46,8 @@ function OrdersTable({ ordersData }: any) {
   for (let i = 0; i < ordersData.length; i++) {
     data.push({
       key: i + 1,
-      name: ordersData[i].orderBy.firstname,
+      name:
+        ordersData[i]?.user?.firstname + " " + ordersData[i]?.user?.lastname,
       product: (
         <Link
           className="text-blue-500 font-bold"
@@ -55,7 +56,7 @@ function OrdersTable({ ordersData }: any) {
           View Orders
         </Link>
       ),
-      amount: ordersData[i].paymentIntent.amount,
+      amount: ordersData[i]?.totalPrice ? ordersData[i]?.totalPrice : "--",
       date: new Date(ordersData[i].createdAt).toLocaleString(),
       action: (
         <div className="flex items-center gap-1">

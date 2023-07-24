@@ -14,7 +14,8 @@ function Orders() {
     };
   }, []);
 
-  const ordersState = useSelector((state: any) => state.order.orders);
+  const ordersState = useSelector((state: any) => state.order);
+  const { orders } = ordersState;
 
   return (
     <>
@@ -22,7 +23,7 @@ function Orders() {
         <PageTitle title="Orders" />
 
         <div>
-          <OrdersTable ordersData={ordersState} />
+          <OrdersTable ordersData={orders} />
         </div>
       </main>
     </>
