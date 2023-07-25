@@ -71,7 +71,7 @@ function CouponTable({ couponsData }: any) {
     }, 100);
   };
 
-  for (let i = 0; i < couponsData.length; i++) {
+  for (let i = 0; i < couponsData?.length; i++) {
     data.push({
       key: i + 1,
       name: couponsData[i].name,

@@ -4,7 +4,10 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/PageTitle.tsx";
 import { useEffect } from "react";
-import { getSingleOrder } from "../../features/order/orderSlice.ts";
+import {
+  getSingleOrder,
+  updateSingleOrderStatus,
+} from "../../features/order/orderSlice.ts";
 
 interface DataType {}
 
@@ -45,7 +48,7 @@ function ViewOrder() {
   const dispatch = useDispatch();
 
   // ** RTK
-  const userOrdersState = useSelector((state: any) => state.order.singleOrder);
+  const userOrderState = useSelector((state: any) => state.order.singleOrder);
 
   // ** Get the order ID
   const orderId = location.pathname.split("/")[3];
@@ -56,21 +59,33 @@ function ViewOrder() {
     dispatch(getSingleOrder(orderId));
   }, []);
 
+  // ** Update Order Status
+  const updateStatus = (data: any) => {
+    // @ts-ignore
+    dispatch(updateSingleOrderStatus(data));
+  };
+
   // ** Push data to Table
-  for (let i = 0; i < userOrdersState.orderItems?.length; i++) {
+  for (let i = 0; i < userOrderState?.orderItems?.length; i++) {
     data.push({
       key: i + 1,
-      name: userOrdersState?.orderItems[i]?.product?.title,
-      brand: userOrdersState?.orderItems[i]?.product?.brand,
-      count: userOrdersState?.orderItems.length,
-      amount: userOrdersState?.orderItems[i]?.price,
-      color: userOrdersState?.orderItems[i]?.color?.title,
+      name: userOrderState?.orderItems[i]?.product?.title,
+      brand: userOrderState?.orderItems[i]?.product?.brand,
+      count: userOrderState?.orderItems.length,
+      amount: userOrderState?.orderItems[i]?.price,
+      color: userOrderState?.orderItems[i]?.color?.title,
       action: (
         <>
           <select
             className="py-2 px-4 bg-gray-100 text-gray-800 w-full text-sm outline-none font-medium mt-1"
-            name=""
-            id=""
+            name="order-status"
+            defaultValue={userOrderState?.orderStatus}
+            onChange={(e: any) =>
+              updateStatus({
+                id: userOrderState?._id,
+                status: e.target.value,
+              })
+            }
           >
             <option value="Ordered" disabled selected>
               Ordered

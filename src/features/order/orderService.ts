@@ -15,7 +15,7 @@ const getSingleOneOrder = async (id: string) => {
 const updateOrderStatus = async (data: any) => {
   const response = await axios.put(
     `${base_url}user/update-order/${data.id}`,
-    { status: data.status },
+    data,
     config
   );
   return response.data;

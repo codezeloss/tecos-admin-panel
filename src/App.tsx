@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login.tsx";
-import ResetPassword from "./pages/ResetPassword.tsx";
-import ForgotPassword from "./pages/ForgotPassword.tsx";
 import Layout from "./components/Layout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Enquiries from "./pages/Enquiries/Enquiries.tsx";
@@ -23,15 +21,29 @@ import AddCoupon from "./pages/Coupons/AddCoupon.tsx";
 import CouponsList from "./pages/Coupons/CouponsList.tsx";
 import ViewEnquiry from "./pages/Enquiries/ViewEnquiry.tsx";
 import ViewOrder from "./pages/Orders/ViewOrder.tsx";
+import { PrivateRoutes } from "./routing/privateRoutes.tsx";
+import { OpenRoutes } from "./routing/openRoutes.tsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/admin" element={<Layout />}>
+        <Route
+          path="/"
+          element={
+            <OpenRoutes>
+              <Login />
+            </OpenRoutes>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoutes>
+              <Layout />
+            </PrivateRoutes>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="/admin/catalog/add-product" element={<AddProduct />} />
           <Route

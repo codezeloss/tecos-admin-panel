@@ -22,8 +22,7 @@ function Dashboard() {
   );
 
   // ** RTK - Yearly Stats State
-  const yearlyStatsState = useSelector((state: any) => state.order);
-  const { yearlyStats } = yearlyStatsState;
+  const yearlyStatsState = useSelector((state: any) => state.order.yearlyStats);
 
   // ** RTK - Orders State
   const ordersState = useSelector((state: any) => state.order);
@@ -84,8 +83,8 @@ function Dashboard() {
           <h3 className="text-xl mt-6 mb-4 font-semibold">Status</h3>
           <div className="flex items-center gap-3 mb-4">
             <StatusCards
-              total={yearlyStatsState && yearlyStats[0]?.amount}
-              count={yearlyStatsState && yearlyStats[0]?.count}
+              total={yearlyStatsState ? yearlyStatsState[0]?.amount : "--"}
+              count={yearlyStatsState ? yearlyStatsState[0]?.count : "--"}
             />
           </div>
 

@@ -22,7 +22,7 @@ function AddBrand() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // RTK
+  // ** RTK - Brand State
   const newBrand = useSelector((state: any) => state.brand);
   const {
     isSuccess,
@@ -33,7 +33,7 @@ function AddBrand() {
     updatedBrand,
   } = newBrand;
 
-  // Brand id
+  // ** Brand id
   const brandId = location.pathname.split("/")[4];
   //
   useEffect(() => {
@@ -45,7 +45,7 @@ function AddBrand() {
     }
   }, [brandId]);
 
-  // Toast
+  // ** Toast
   useEffect(() => {
     if (isSuccess && createdBrand) {
       toast.success("🦄 Brand added successfully!", {});
@@ -59,11 +59,11 @@ function AddBrand() {
     }
   }, [isSuccess, isError, isLoading, createdBrand]);
 
-  // Formik
+  // ** Formik
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      title: brandName || "",
+      title: String(brandName) || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {

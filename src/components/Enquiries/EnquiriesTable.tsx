@@ -65,12 +65,13 @@ function EnquiriesTable({ enquiriesData }: any) {
   const [enquiryId, setEnquiryId] = useState("");
   const dispatch = useDispatch();
 
+  // **
   useEffect(() => {
     // @ts-ignore
     dispatch(getEnquiries());
   }, []);
 
-  // Modal
+  // ** Modal
   const showModal = (id: string) => {
     setOpen(true);
     setEnquiryId(id);
@@ -79,7 +80,7 @@ function EnquiriesTable({ enquiriesData }: any) {
     setOpen(false);
   };
 
-  // Delete Color
+  // ** Delete Color
   const delEnquiry = (id: string) => {
     // @ts-ignore
     dispatch(deleteEnquiry(id));
@@ -88,7 +89,7 @@ function EnquiriesTable({ enquiriesData }: any) {
     dispatch(getEnquiries());
   };
 
-  // Handle Enquiry Status Change
+  // ** Handle Enquiry Status Change
   const setEnquiryStatus = (e: string, id: string) => {
     const data = { id, enquiryData: e };
     // @ts-ignore
