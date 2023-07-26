@@ -37,8 +37,7 @@ function Login() {
   // ** Toast notification & Redirect the user
   useEffect(() => {
     if (isSuccess && user) {
-      navigate("/admin");
-      window.location.reload();
+      navigate("/admin/dashboard");
       toast.success("Login successfully!", {});
     }
   }, [userState]);

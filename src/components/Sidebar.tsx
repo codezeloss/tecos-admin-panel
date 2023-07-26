@@ -19,7 +19,7 @@ function Sidebar() {
 
       <div className="flex flex-col gap-2">
         <div>
-          <Link to="/admin">
+          <Link to="/admin/dashboard">
             <div className="flex items-center gap-1 px-8 py-2 hover:bg-gray-800">
               <LuLayoutDashboard />
               <p className="font-medium text-base">Dashboard</p>

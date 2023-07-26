@@ -16,6 +16,27 @@ function Dashboard() {
   const [monthlyIncomeData, setMonthlyIncomeData] = useState<any[]>([]);
   const [monthlySalesData, setMonthlySalesData] = useState<any[]>([]);
 
+  // ** Axios Config
+  // @ts-ignore
+  let getTokenFromLocalStorage;
+  if (localStorage.getItem("user")) {
+    // @ts-ignore
+    getTokenFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+  } else {
+    getTokenFromLocalStorage = "";
+  }
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage.token !== null
+          ? getTokenFromLocalStorage.token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  };
+
   // ** RTK - Monthly Orders State
   const monthlyOrdersState = useSelector(
     (state: any) => state.order?.monthlyOrders
@@ -31,11 +52,11 @@ function Dashboard() {
   // **
   useEffect(() => {
     // @ts-ignore
-    dispatch(getMonthlyOrdersData());
+    dispatch(getMonthlyOrdersData(config2));
     // @ts-ignore
-    dispatch(getYearlyStatsData());
+    dispatch(getYearlyStatsData(config2));
     // @ts-ignore
-    dispatch(getOrders());
+    dispatch(getOrders(config2));
   }, []);
 
   // **

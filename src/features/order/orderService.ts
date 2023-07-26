@@ -2,8 +2,8 @@ import { base_url } from "../../utils/base_url.ts";
 import axios from "axios";
 import { config } from "../../utils/axios_config.ts";
 
-const getOrders = async () => {
-  const response = await axios.get(`${base_url}user/orders`, config);
+const getOrders = async (data: any) => {
+  const response = await axios.get(`${base_url}user/orders`, data);
   return response.data;
 };
 
@@ -26,13 +26,13 @@ const getOrderByUser = async (id: any) => {
   return response.data;
 };
 
-const getMonthlyOrders = async () => {
-  const response = await axios.get(`${base_url}user/wise-order-income`, config);
+const getMonthlyOrders = async (data: any) => {
+  const response = await axios.get(`${base_url}user/wise-order-income`, data);
   return response.data;
 };
 
-const getYearlyStats = async () => {
-  const response = await axios.get(`${base_url}user/yearly-income`, config);
+const getYearlyStats = async (data: any) => {
+  const response = await axios.get(`${base_url}user/yearly-income`, data);
   return response.data;
 };
 

@@ -40,7 +40,6 @@ function Headbar() {
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
-    navigate("/");
   };
 
   return (

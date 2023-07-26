@@ -15,9 +15,9 @@ const initialState = {
 // ** @@ GET ALL ORDERS
 export const getOrders = createAsyncThunk(
   "order/orders",
-  async (thunkAPI: any) => {
+  async (data: any, thunkAPI: any) => {
     try {
-      return await orderService.getOrders();
+      return await orderService.getOrders(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -63,9 +63,9 @@ export const getUserOrders = createAsyncThunk(
 // ** @@ GET USER ORDERS
 export const getMonthlyOrdersData = createAsyncThunk(
   "order/monthly-orders",
-  async (thunkAPI: any) => {
+  async (data: any, thunkAPI: any) => {
     try {
-      return await orderService.getMonthlyOrders();
+      return await orderService.getMonthlyOrders(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -75,9 +75,9 @@ export const getMonthlyOrdersData = createAsyncThunk(
 // ** @@ GET YEARLY STATS
 export const getYearlyStatsData = createAsyncThunk(
   "order/yearly-stats",
-  async (thunkAPI: any) => {
+  async (data: any, thunkAPI: any) => {
     try {
-      return await orderService.getYearlyStats();
+      return await orderService.getYearlyStats(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
