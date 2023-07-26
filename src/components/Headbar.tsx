@@ -2,7 +2,7 @@ import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { useState } from "react";
 import type { MenuProps } from "antd";
 import { Dropdown } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IoMdLogOut } from "react-icons/io";
 
@@ -29,7 +29,6 @@ const items: MenuProps["items"] = [
 ];
 
 function Headbar() {
-  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
 
   // ** RTK - User State
