@@ -21,29 +21,13 @@ import AddCoupon from "./pages/Coupons/AddCoupon.tsx";
 import CouponsList from "./pages/Coupons/CouponsList.tsx";
 import ViewEnquiry from "./pages/Enquiries/ViewEnquiry.tsx";
 import ViewOrder from "./pages/Orders/ViewOrder.tsx";
-import { PrivateRoutes } from "./routing/privateRoutes.tsx";
-import { OpenRoutes } from "./routing/openRoutes.tsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <OpenRoutes>
-              <Login />
-            </OpenRoutes>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoutes>
-              <Layout />
-            </PrivateRoutes>
-          }
-        >
+        <Route path="/" element={<Login />} />
+        <Route path="/admin" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="/admin/catalog/add-product" element={<AddProduct />} />
           <Route

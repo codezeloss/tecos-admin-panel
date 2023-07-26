@@ -9,7 +9,8 @@ const getUserFromLocalStorage = localStorage.getItem("user") || null;
 
 // initial states
 const initialState = {
-  user: getUserFromLocalStorage,
+  // @ts-ignore
+  user: JSON.parse(getUserFromLocalStorage),
   isError: false,
   isLoading: false,
   isSuccess: false,

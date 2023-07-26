@@ -17,7 +17,7 @@ function Layout() {
         </div>
         <div className="w-full h-screen bg-gray-100 overflow-scroll">
           <ToastContainer
-            position="bottom-right"
+            position="top-right"
             autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}

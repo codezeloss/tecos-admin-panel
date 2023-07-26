@@ -1,11 +1,8 @@
-import {
-  MdKeyboardDoubleArrowLeft,
-  MdOutlineNotifications,
-} from "react-icons/md";
+import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { useState } from "react";
 import type { MenuProps } from "antd";
 import { Dropdown } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IoMdLogOut } from "react-icons/io";
 
@@ -32,15 +29,18 @@ const items: MenuProps["items"] = [
 ];
 
 function Headbar() {
+  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
 
   // ** RTK - User State
-  const userState = useSelector((state: any) => state.auth.user);
+  const userState = useSelector((state: any) => state.auth);
+  const { user } = userState;
 
   // ** Handle User Logout
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
+    navigate("/");
   };
 
   return (
@@ -52,10 +52,12 @@ function Headbar() {
       </div>
 
       <div className="relative flex items-center gap-4">
-        <p className="text-sm font-semibold">EN</p>
-        <div className="text-xl">
+        {/*
+          <p className="text-sm font-semibold">EN</p>
+          <div className="text-xl">
           <MdOutlineNotifications />
-        </div>
+          </div>
+         */}
 
         <Dropdown menu={{ items }} trigger={["click"]}>
           <div
@@ -68,13 +70,13 @@ function Headbar() {
               alt=""
             />
             <div className="text-xs">
-              <p className="font-bold">{userState.firstname}</p>
-              <p className="text-gray-500">{userState.email}</p>
+              <p className="font-bold">{user && user?.firstname}</p>
+              <p className="text-gray-500">{user && user?.email}</p>
             </div>
           </div>
         </Dropdown>
 
-        <button className="text-xl text-red-400 ml-2" onClick={handleLogout}>
+        <button className="text-xl text-red-500 ml-2" onClick={handleLogout}>
           <IoMdLogOut />
         </button>
       </div>

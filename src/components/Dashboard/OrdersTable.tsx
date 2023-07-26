@@ -52,7 +52,7 @@ function OrdersTable({ ordersData }: any) {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-20">
       <h3 className="text-xl mt-10 mb-6 font-semibold">Recent Orders</h3>
       <Table columns={columns} dataSource={data} size="middle" />
     </div>

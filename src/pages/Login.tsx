@@ -5,11 +5,7 @@ import { object, string } from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice.ts";
 import { useEffect } from "react";
-import {
-  getMonthlyOrdersData,
-  getOrders,
-  getYearlyStatsData,
-} from "../features/order/orderSlice.ts";
+import { toast } from "react-toastify";
 
 // ** yup Schema
 let userSchema = object({
@@ -22,9 +18,8 @@ function Login() {
   const dispatch = useDispatch();
 
   // ** RTK - Auth State
-  const { user, isSuccess, isLoading, isError, message } = useSelector(
-    (state: any) => state.auth
-  );
+  const userState = useSelector((state: any) => state.auth);
+  const { user, isSuccess, message } = userState;
 
   // ** Formik
   const formik = useFormik({
@@ -39,20 +34,14 @@ function Login() {
     },
   });
 
+  // ** Toast notification & Redirect the user
   useEffect(() => {
-    if (isSuccess) {
-      // @ts-ignore
-      dispatch(getMonthlyOrdersData());
-      // @ts-ignore
-      dispatch(getYearlyStatsData());
-      // @ts-ignore
-      dispatch(getOrders());
+    if (isSuccess && user) {
       navigate("/admin");
       window.location.reload();
-    } else {
-      navigate("/");
+      toast.success("Login successfully!", {});
     }
-  }, [user, isError, isSuccess, isLoading]);
+  }, [userState]);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-300">
